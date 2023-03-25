@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/goit-react-hw-04-phonebook/static/css/main.2c2b0b7e.css",
+    "main.js": "/goit-react-hw-04-phonebook/static/js/main.ececc54a.js",
+    "index.html": "/goit-react-hw-04-phonebook/index.html",
+    "main.2c2b0b7e.css.map": "/goit-react-hw-04-phonebook/static/css/main.2c2b0b7e.css.map",
+    "main.ececc54a.js.map": "/goit-react-hw-04-phonebook/static/js/main.ececc54a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2c2b0b7e.css",
+    "static/js/main.ececc54a.js"
+  ]
+}
