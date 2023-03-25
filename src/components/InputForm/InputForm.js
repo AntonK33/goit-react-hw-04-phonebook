@@ -1,51 +1,61 @@
-import { Component } from "react"
+import { useState } from "react"
 import { nanoid } from "nanoid";
 import css from './InputForm.module.css';
 import PropTypes from 'prop-types';
 
 
-export class InputForm extends Component {
-    state = {       
-        name: '',
-        number: ''
-    }
+ const InputForm = ({onSubmit}) => {
+    // state = {       
+    //     name: '',
+    //     number: ''
+    // }
+    const[name, setName] = useState('');
+     const [number, setNumber] = useState('')
+     
+    const onInputHandler = (event) => {
+        // useState({ [event.target.name]: event.target.value })
+        setName(event.target.value)
+              
+     }
+     const onInputNumber = (event) => {
+        
+         setNumber(event.target.value)
+         console.log(setNumber)
+     }
 
-    onInputHandler = (event) => {
-        this.setState({ [event.target.name]: event.target.value })
-    }
-    
-    submitForm = e => {
+    const submitForm = e => {
         e.preventDefault();
         const newContact = {
-            name: this.state.name,
+            name: name,
             id: nanoid(),
-            number: this.state.number,
+            number: number,
+            
         };
-        
-        this.props.onSubmit(newContact);
-        
-        console.log(this.state)
+       
+        onSubmit(newContact);
+        setName('');
+        setNumber('');
         console.log(newContact)
-        this.restart();
+        //restart();
     } 
     
 
-    restart = () => {
-        setTimeout(() => {
-            this.setState({ name: "", number: "" })
-        }, 500);
-    }
+    // const restart = () => {
+    //     setTimeout(() => {
+    //         useState({ name: "", number: "" })
+    //     }, 500);
+    // }
     
-    render() {                
+                    
         return (
             <form
                 className={css.form}
-                onSubmit={this.submitForm}>
+                onSubmit={submitForm}>
                 <label htmlFor='name' className={css.label_form}>
                     <span>Name</span>
                     <input
-                    onChange={this.onInputHandler}
-                    value={this.state.name}
+                    onChange={onInputHandler}
+                    value={name}
                     type="text"
                     name="name"
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -57,10 +67,10 @@ export class InputForm extends Component {
                 <label htmlFor='number' className={css.label_form}>
                     <span>Number</span>
                     <input
-                    onChange={this.onInputHandler}
+                    onChange={onInputNumber}
                     type="tel"
                     name="number"
-                        value={this.state.number}
+                        value={number}
                         className={css.input}
                 />
                 </label>
@@ -73,16 +83,16 @@ export class InputForm extends Component {
             </form>
             
         )
-    }
+    
 } 
     
-//ап 
+ 
 
 
 InputForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
-    
+export default InputForm;
 
      
     

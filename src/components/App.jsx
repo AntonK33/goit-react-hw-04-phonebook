@@ -1,16 +1,20 @@
-import { Component } from 'react';
-import { InputForm } from './InputForm/InputForm';
+import { useState, useEffect } from 'react';
+import InputForm from './InputForm/InputForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 
-export class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
-  addContact = newContact => {
+const App = () => {
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) ?? []
+  );
+  const [filter, setFilter] = useState('');
+  // state = {
+  //   contacts: [],
+  //   filter: '',
+  // };
+  const addContact = newContact => {
     if (
-      this.state.contacts.some(
+      contacts.some(
         contact =>
           contact.name.toLocaleLowerCase() ===
           newContact.name.toLocaleLowerCase()
@@ -18,55 +22,54 @@ export class App extends Component {
     ) {
       alert(newContact.name + 'is already to contact');
     } else {
-      this.setState(prevState => ({
-        contacts: [newContact, ...prevState.contacts],
-      }));
+      setContacts(prevContacts => [newContact, ...prevContacts]);
     }
   };
 
-  filterHandler = e => {
-    this.setState({ filter: e.target.value });
+  const filterHandler = e => {
+    setFilter(e.target.value);
   };
 
-  deleteContact = id => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
-    }));
-  };
-
-  showFilteredContacts = () => {
-    return this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+  const deleteContact = id => {
+    setContacts(prevContacts =>
+      prevContacts.filter(contact => contact.id !== id)
     );
   };
 
-  render() {
-    //const inputValue = this.state.name;
-    return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
-        <InputForm onSubmit={this.addContact} />
-        {this.state.contacts === 0 ? (
-          <p>There are no contacts</p>
-        ) : (
-          <>
-            <Filter onInputHandler={this.filterHandler}></Filter>
-            <ContactList
-              deleteContact={this.deleteContact}
-              filteredContacts={this.showFilteredContacts()}
-            ></ContactList>
-          </>
-        )}
-      </div>
+  const showFilteredContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-  }
-}
+  };
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+  return (
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        fontSize: 40,
+        color: '#010101',
+      }}
+    >
+      <InputForm onSubmit={addContact} />
+      {contacts.length === 0 ? (
+        <p>There are no contacts</p>
+      ) : (
+        <>
+          <Filter onInputHandler={filterHandler}></Filter>
+          <ContactList
+            deleteContact={deleteContact}
+            filteredContacts={showFilteredContacts()}
+          ></ContactList>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default App;

@@ -3,7 +3,6 @@ import React from 'react';
 import css from './ContactList.module.css';
 
 export const List = ({ id, number, name, deleteContact }) => {
-  console.log();
   return (
     <li key={id} className={css.filter_item}>
       <p className={css.filter_p}>
