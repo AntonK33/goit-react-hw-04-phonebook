@@ -8,10 +8,7 @@ const App = () => {
     () => JSON.parse(localStorage.getItem('contacts')) ?? []
   );
   const [filter, setFilter] = useState('');
-  // state = {
-  //   contacts: [],
-  //   filter: '',
-  // };
+
   const addContact = newContact => {
     if (
       contacts.some(

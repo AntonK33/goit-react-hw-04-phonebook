@@ -5,10 +5,7 @@ import PropTypes from 'prop-types';
 
 
  const InputForm = ({onSubmit}) => {
-    // state = {       
-    //     name: '',
-    //     number: ''
-    // }
+   
     const[name, setName] = useState('');
      const [number, setNumber] = useState('')
      
@@ -40,11 +37,7 @@ import PropTypes from 'prop-types';
     } 
     
 
-    // const restart = () => {
-    //     setTimeout(() => {
-    //         useState({ name: "", number: "" })
-    //     }, 500);
-    // }
+   
     
                     
         return (
